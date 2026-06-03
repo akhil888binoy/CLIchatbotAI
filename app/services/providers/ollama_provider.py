@@ -1,5 +1,5 @@
 
-from config.config import ollama_api
+from app.config.config import ollama_api
 import requests
 
 
@@ -19,5 +19,4 @@ def send_ollama(prompt, model="qwen"):
         json={"model": model, "prompt": prompt, "stream": False}
     )
     return response.json()["response"]
-
 

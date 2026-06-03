@@ -1,14 +1,15 @@
+from app.services.providers.ollama_provider import send_ollama
+from app.models.conversation import Conversation
 
-from ollama_provider import send_ollama
 
-from models import Conversation
+def _conversation_to_prompt(message: Conversation) -> str:
+    return "\n".join(f"{entry.role}: {entry.content}" for entry in message.messages)
 
-def send_message( message: Conversation , provider: str):
+
+def send_message(message: Conversation, provider: str):
 
     if provider == 'OLLAMA':
-        response = send_ollama(message)
+        response = send_ollama(_conversation_to_prompt(message))
         return response
-    else :
-        print("Give valid provider")
+    raise ValueError(f"Unsupported provider: {provider}")
     
-
